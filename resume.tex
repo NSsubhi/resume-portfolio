@@ -1,0 +1,156 @@
+% Resume in Latex - ML/AI Focus
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.7in}
+\addtolength{\evensidemargin}{-0.7in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.6in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2.5pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & #2 \\
+    \textit{\small#3} & \textit{\small #4} \\
+  \end{tabular*}\vspace{-9pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+    \small#1 & #2 \\
+  \end{tabular*}\vspace{-9pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.12in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape Subhiksha Seshadri Nallore} \\ \vspace{1pt}
+    New York, NY 11228 $|$ (+1) 718-930-9779 $|$ \href{mailto:ssn9077@nyu.edu}{ssn9077@nyu.edu} $|$ \href{https://linkedin.com/in/subhiksha-seshadri}{linkedin.com/in/subhiksha-seshadri}
+\end{center}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+\resumeSubHeadingListStart
+\resumeSubheading{Oracle}{June 2022 -- July 2024}{Software Engineer - ML/AI Focus}{Hyderabad, India}
+\resumeItemListStart
+\resumeItem{Developed revenue forecasting ML model using XGBoost and time-series analysis, achieving 87\% prediction accuracy for quarterly revenue projections across 40,000+ customers}
+\resumeItem{Built intelligent bin recommendation system using collaborative filtering algorithms, implementing Redis caching for sub-100ms response times and 95\% recommendation accuracy}
+\resumeItem{Engineered automated error classification system using NLP and sentiment analysis, reducing manual triage time by 60\% and improving customer issue resolution by 40\%}
+\resumeItem{Implemented RAG (Retrieval-Augmented Generation) system for customer support, integrating vector embeddings with Elasticsearch to provide contextual responses with 90\% relevance score}
+\resumeItem{Created predictive analytics dashboard using Kibana and OpenSearch, implementing anomaly detection algorithms to identify inventory discrepancies with 85\% precision}
+\resumeItem{Developed automated testing framework using ML-based test case generation, achieving 92\% test coverage and reducing regression testing time by 50\%}
+\resumeItem{Optimized database queries using ML-driven query optimization, implementing execution plan analysis and reducing average query latency by 35\%}
+\resumeItemListEnd
+
+\resumeSubheading{Micron Technology}{May 2021 -- July 2021}{SSD Firmware Intern}{Bengaluru, India}
+\resumeItemListStart
+\resumeItem{Developed ML-powered SSD log parser using pattern recognition algorithms, achieving 40\% improvement in debugging efficiency for 15+ firmware failure root causes}
+\resumeItem{Implemented predictive failure detection model using time-series analysis, reducing SSD failure rates by 25\% through proactive maintenance scheduling}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+\resumeProjectHeading{\textbf{Personal Finance AI Assistant} $|$ \emph{Python, FastAPI, React, OpenAI GPT-4, Pinecone, LangChain}}{}
+\resumeItemListStart
+\resumeItem{Built intelligent personal finance tracker using RAG architecture, integrating OpenAI GPT-4 with Pinecone vector database for contextual financial advice and spending pattern analysis}
+\resumeItem{Implemented multi-modal data processing pipeline using OCR for receipt scanning and NLP for transaction categorization, achieving 94\% accuracy in expense classification}
+\resumeItem{Developed predictive spending models using LSTM networks and time-series forecasting, providing personalized budget recommendations with 89\% prediction accuracy}
+\resumeItem{Created interactive dashboard with real-time financial insights using React and D3.js, enabling users to track spending trends and receive AI-powered financial recommendations}
+\resumeItemListEnd
+
+\resumeProjectHeading{\textbf{Intelligent Code Review Assistant} $|$ \emph{Python, Transformers, FastAPI, PostgreSQL, Docker}}{}
+\resumeItemListStart
+\resumeItem{Developed AI-powered code review system using fine-tuned CodeBERT model, analyzing code quality, security vulnerabilities, and suggesting improvements with 91\% accuracy}
+\resumeItem{Implemented semantic code similarity detection using sentence transformers, identifying duplicate code patterns and suggesting refactoring opportunities}
+\resumeItem{Built automated documentation generator using GPT-3.5 and AST parsing, creating comprehensive API documentation and code comments with 88\% relevance}
+\resumeItem{Integrated with GitLab CI/CD pipeline, providing real-time code quality metrics and automated pull request analysis for 15+ development teams}
+\resumeItemListEnd
+
+\resumeProjectHeading{\textbf{Smart Inventory Optimization System} $|$ \emph{Python, Scikit-learn, Apache Kafka, Redis, Kubernetes}}{}
+\resumeItemListStart
+\resumeItem{Engineered ML-driven inventory optimization system using ensemble methods (Random Forest, XGBoost), reducing stockouts by 45\% and excess inventory by 30\%}
+\resumeItem{Implemented real-time demand forecasting using ARIMA and Prophet models, processing 1M+ daily transactions with 92\% prediction accuracy}
+\resumeItem{Built automated reorder point calculation using reinforcement learning algorithms, optimizing inventory levels across 100+ warehouses with 40\% cost reduction}
+\resumeItem{Developed anomaly detection system using Isolation Forest and LOF algorithms, identifying inventory discrepancies and fraud patterns with 95\% precision}
+\resumeItemListEnd
+
+\resumeProjectHeading{\textbf{NYC Taxi Fare Prediction} $|$ \emph{Python, Flask, React.js, XGBoost, Scikit-learn}}{}
+\resumeItemListStart
+\resumeItem{Engineered ML model to predict NYC taxi fares from 55M trip records using feature engineering and ensemble methods, achieving RMSE: 2.72 and R²: 81.7\%}
+\resumeItem{Applied advanced feature engineering using Pandas, NumPy, and Geopy, implementing StandardScaler and OneHotEncoder for optimal model performance}
+\resumeItem{Built interactive web interface with Flask and React.js for real-time fare predictions, serving 1000+ daily requests with sub-second response times}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{New York University}{Expected May 2026}{Master of Computer Science}{GPA: 3.7/4.0}
+\resumeSubheading{National Institute of Technology Karnataka, Surathkal}{June 2018 -- June 2022}{Bachelor of Technology in Electrical and Electronics Engineering}{GPA: 3.8/4.0}
+\resumeSubHeadingListEnd
+\vspace{-10pt}
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+\small{\item{
+\textbf{ML/AI}{: TensorFlow, PyTorch, Scikit-learn, XGBoost, Transformers, LangChain, OpenAI GPT, RAG, LSTM, CNN, NLP, Computer Vision} \\
+\textbf{Languages}{: Python, Java, JavaScript, C++, SQL, Shell Scripting} \\
+\textbf{Frameworks \& Tools}{: FastAPI, Flask, Spring Boot, React.js, Docker, Kubernetes, Apache Kafka, Redis} \\
+\textbf{Data \& Analytics}{: Pandas, NumPy, Matplotlib, Seaborn, PostgreSQL, MongoDB, Elasticsearch, Pinecone} \\
+\textbf{Cloud \& DevOps}{: AWS, Git, CI/CD, Jenkins, Prometheus, Grafana, Kibana, OpenSearch} \\
+\textbf{MLOps}{: MLflow, SHAP, Feature Stores, Model Versioning, A/B Testing, Model Monitoring}
+}}
+\end{itemize}
+\vspace{-15pt}
+
+\end{document} 
