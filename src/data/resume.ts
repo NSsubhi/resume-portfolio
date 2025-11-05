@@ -19,6 +19,7 @@ export type Education = {
 export type Project = {
   id: string;
   title: string;
+  description: string;
   tech: string;
   highlights: string[];
   links?: {
@@ -29,30 +30,41 @@ export type Project = {
 
 export const experiences: Experience[] = [
   {
+    id: "nyu",
+    company: "New York University",
+    role: "Software Engineer",
+    location: "New York, NY",
+    period: "May 2025 – Present",
+    highlights: [
+      "Redesigned the student web portal using React and FastAPI, adding secure authentication and role-based access control to improve usability and data privacy for 200+ active users.",
+      "Implemented a backend metrics module that logs API usage and page-load performance, providing real-time analytics to identify bottlenecks and cut average load time by 30%.",
+    ],
+  },
+  {
     id: "oracle",
     company: "Oracle",
-    role: "Software Engineer - ML/AI Focus",
-    location: "Hyderabad, India",
+    role: "Software Engineer",
+    location: "",
     period: "June 2022 – July 2024",
     highlights: [
-      "Developed revenue forecasting ML model using XGBoost and time-series analysis, achieving 87% prediction accuracy for quarterly revenue projections across 40,000+ customers",
-      "Built intelligent bin recommendation system using collaborative filtering algorithms, implementing Redis caching for sub-100ms response times and 95% recommendation accuracy",
-      "Engineered automated error classification system using NLP and sentiment analysis, reducing manual triage time by 60% and improving customer issue resolution by 40%",
-      "Implemented RAG (Retrieval-Augmented Generation) system for customer support, integrating vector embeddings with Elasticsearch to provide contextual responses with 90% relevance score",
-      "Created predictive analytics dashboard using Kibana and OpenSearch, implementing anomaly detection algorithms to identify inventory discrepancies with 85% precision",
-      "Developed automated testing framework using ML-based test case generation, achieving 92% test coverage and reducing regression testing time by 50%",
-      "Optimized database queries using ML-driven query optimization, implementing execution plan analysis and reducing average query latency by 35%",
+      "Spearheaded full-stack ERP features and REST APIs using Java, JavaScript, and SQL processing 100M+ monthly transactions, driving 32% YoY growth.",
+      "Architected event-driven microservices in Spring Boot using async execution, thread-pooling, and non-blocking I/O, increasing parallel throughput by 50% for 60K+ concurrent users.",
+      "Deployed cloud-native applications on Oracle Cloud Infrastructure (OCI) using Docker containers orchestrated with Kubernetes, enabling horizontal scaling ensuring 99.97% uptime.",
+      "Optimized database interactions by refactoring complex SQL queries and integrating a Redis caching layer, resulting in a 35% reduction in API response latency and lowering P99 latency to 120ms.",
+      "Developed unit and full-stack automation tests in JUnit, Mockito, and Spruce with 95% code coverage, and programmed Jenkins CI/CD pipelines for regression testing and reducing release defects by 40%.",
+      "Collaborated in Agile sprints to resolve 60+ production issues across the SDLC, ensuring timely hot-fix delivery, and enhanced the UI with a React based alert system that boosted customer retention, saving $150K annually.",
     ],
   },
   {
     id: "micron",
     company: "Micron Technology",
-    role: "SSD Firmware Intern",
-    location: "Bengaluru, India",
+    role: "SSD Firmware Engineering Intern",
+    location: "",
     period: "May 2021 – July 2021",
     highlights: [
-      "Developed ML-powered SSD log parser using pattern recognition algorithms, achieving 40% improvement in debugging efficiency for 15+ firmware failure root causes",
-      "Implemented predictive failure detection model using time-series analysis, reducing SSD failure rates by 25% through proactive maintenance scheduling",
+      "Developed high-performance system software in C++ for SSD firmware, implementing I/O operation simulations for storage optimization and performance analysis across distributed storage systems.",
+      "Designed and administered Zoned Namespace Model simulation according to Microsoft specifications, creating scalable data flow architectures that improved memory utilization by 25% in production storage systems.",
+      "Established automated debugging tools and log parsing systems in Python, enabling rapid identification and resolution of system failures across multiple environments and reducing incident response time by 50%.",
     ],
   },
 ];
@@ -61,16 +73,16 @@ export const education: Education[] = [
   {
     id: "nyu",
     institution: "New York University",
-    degree: "Master of Computer Science",
-    location: "New York, NY",
-    period: "Expected May 2026",
-    gpa: "3.7/4.0",
+    degree: "Master of Science in Computer Science",
+    location: "New York, NY, US",
+    period: "September 2024 – May 2026",
+    gpa: "3.8/4.0",
   },
   {
     id: "nitk",
     institution: "National Institute of Technology Karnataka, Surathkal",
     degree: "Bachelor of Technology in Electrical and Electronics Engineering",
-    location: "Surathkal, India",
+    location: "Mangalore, India",
     period: "June 2018 – June 2022",
     gpa: "3.8/4.0",
   },
@@ -78,46 +90,77 @@ export const education: Education[] = [
 
 export const projects: Project[] = [
   {
-    id: "finance-ai",
-    title: "Personal Finance AI Assistant",
-    tech: "Python, FastAPI, React, OpenAI GPT-4, Pinecone, LangChain",
+    id: "expense-tracker",
+    title: "Smart Expense Categorizer with ML",
+    description: "An intelligent expense categorization system that uses Machine Learning and NLP to automatically categorize financial transactions, predict spending patterns, and detect anomalies.",
+    tech: "FastAPI, Streamlit, Scikit-learn, Prophet, Plotly, PostgreSQL",
     highlights: [
-      "Built intelligent personal finance tracker using RAG architecture, integrating OpenAI GPT-4 with Pinecone vector database for contextual financial advice and spending pattern analysis",
-      "Implemented multi-modal data processing pipeline using OCR for receipt scanning and NLP for transaction categorization, achieving 94% accuracy in expense classification",
-      "Developed predictive spending models using LSTM networks and time-series forecasting, providing personalized budget recommendations with 89% prediction accuracy",
-      "Created interactive dashboard with real-time financial insights using React and D3.js, enabling users to track spending trends and receive AI-powered financial recommendations",
+      "Built end-to-end ML pipeline from data ingestion to predictions, implementing NLP-based text classification using TF-IDF vectorization and Random Forest achieving 85%+ accuracy for automatic expense categorization.",
+      "Developed real-time anomaly detection system using Isolation Forest to identify unusual spending patterns and integrated Prophet time series forecasting for future expense predictions.",
+      "Created interactive analytics dashboard with Plotly visualizations and implemented automatic CSV format detection supporting multiple bank statement formats with multi-currency support (USD, INR, EUR, GBP).",
+    ],
+    links: {
+      live: "https://fintracker-production-7af6.up.railway.app/",
+    },
+  },
+  {
+    id: "task-management",
+    title: "Task Management System (Jira/Trello-like)",
+    description: "A full-featured task management system similar to Jira/Trello with project management, task tracking, comments, attachments, and real-time updates.",
+    tech: "FastAPI, Streamlit, PostgreSQL, SQLAlchemy, JWT, bcrypt",
+    highlights: [
+      "Engineered full-featured task management system with project management, task tracking, status workflows (To Do, In Progress, Done), comments, attachments, priority levels, due dates, and user assignments with real-time updates.",
+      "Implemented secure JWT authentication with bcrypt password hashing and developed RESTful APIs with SQLAlchemy ORM supporting complex queries, filtering, and search functionality.",
+      "Built analytics dashboard with real-time metrics and charts, deployed on Railway with separate backend and frontend services supporting horizontal scaling and PostgreSQL database integration.",
+    ],
+    links: {
+      live: "https://task-manager-fe.up.railway.app/",
+    },
+  },
+  {
+    id: "rag-chatbot",
+    title: "Chatbot with RAG (Retrieval Augmented Generation)",
+    description: "An intelligent chatbot that uses RAG to answer questions based on uploaded documents. Supports OpenAI, HuggingFace (free), and Ollama for LLM inference.",
+    tech: "FastAPI, Streamlit, OpenAI, HuggingFace, ChromaDB, LangChain",
+    highlights: [
+      "Implemented RAG architecture using ChromaDB for vector storage and semantic search, enabling document-based question answering with conversational memory and context retention.",
+      "Integrated multiple LLM providers (OpenAI GPT-3.5/GPT-4, HuggingFace free models, Ollama local) with flexible configuration, supporting PDF, DOCX, and TXT document processing via LangChain document loaders.",
+      "Built document embedding pipeline using OpenAI and HuggingFace embeddings, creating vector database with persistent storage enabling efficient similarity search and retrieval-augmented generation.",
     ],
   },
   {
-    id: "code-review",
-    title: "Intelligent Code Review Assistant",
-    tech: "Python, Transformers, FastAPI, PostgreSQL, Docker",
+    id: "realtime-analytics",
+    title: "Real-Time Analytics Dashboard with Kafka & Spark",
+    description: "A real-time analytics dashboard that processes streaming data using Apache Kafka and Apache Spark. Includes simplified in-memory version for easy deployment.",
+    tech: "FastAPI, Streamlit, Apache Spark, Apache Kafka, PostgreSQL, Plotly",
     highlights: [
-      "Developed AI-powered code review system using fine-tuned CodeBERT model, analyzing code quality, security vulnerabilities, and suggesting improvements with 91% accuracy",
-      "Implemented semantic code similarity detection using sentence transformers, identifying duplicate code patterns and suggesting refactoring opportunities",
-      "Built automated documentation generator using GPT-3.5 and AST parsing, creating comprehensive API documentation and code comments with 88% relevance",
-      "Integrated with GitLab CI/CD pipeline, providing real-time code quality metrics and automated pull request analysis for 15+ development teams",
+      "Built real-time streaming pipeline using Apache Kafka for message queuing and Apache Spark Structured Streaming for event processing, aggregating data from multiple sources (user events, transactions, logs) with sub-second latency.",
+      "Developed interactive analytics dashboard with real-time visualizations using Plotly and Recharts, processing streaming events with windowing and aggregation operations for live metrics and insights.",
+      "Architected scalable system with simplified in-memory version for easy deployment, supporting both full Kafka/Spark infrastructure and lightweight in-memory data generator for development and testing environments.",
     ],
+    links: {
+      live: "https://realtime-analytics-dashboard-production.up.railway.app/",
+    },
   },
   {
-    id: "inventory-opt",
-    title: "Smart Inventory Optimization System",
-    tech: "Python, Scikit-learn, Apache Kafka, Redis, Kubernetes",
+    id: "distributed-task-queue",
+    title: "Distributed Task Queue System",
+    description: "A production-ready distributed task queue system similar to Celery, built with FastAPI, Redis, and PostgreSQL. Supports asynchronous background job processing with horizontal scaling.",
+    tech: "FastAPI, Redis, PostgreSQL, Python Multiprocessing, APScheduler",
     highlights: [
-      "Engineered ML-driven inventory optimization system using ensemble methods (Random Forest, XGBoost), reducing stockouts by 45% and excess inventory by 30%",
-      "Implemented real-time demand forecasting using ARIMA and Prophet models, processing 1M+ daily transactions with 92% prediction accuracy",
-      "Built automated reorder point calculation using reinforcement learning algorithms, optimizing inventory levels across 100+ warehouses with 40% cost reduction",
-      "Developed anomaly detection system using Isolation Forest and LOF algorithms, identifying inventory discrepancies and fraud patterns with 95% precision",
+      "Designed production-ready distributed task queue system with Redis message broker, supporting priority queues (high, medium, low), task scheduling with cron-like jobs, and automatic retry with exponential backoff for failed tasks.",
+      "Implemented worker pool management with horizontal scaling capabilities, dead letter queue for persistent failures, and real-time task monitoring dashboard with task dependencies and chaining support.",
+      "Built rate limiting per task type and integrated APScheduler for scheduled task execution, enabling asynchronous background job processing with fault tolerance and distributed architecture across multiple worker nodes.",
     ],
   },
   {
     id: "nyc-taxi",
-    title: "NYC Taxi Fare Prediction",
-    tech: "Python, Flask, React.js, XGBoost, Scikit-learn",
+    title: "NYC Taxi Fare Prediction (Big Data Processing System)",
+    description: "A machine learning model for predicting NYC taxi fares using geospatial features and regression algorithms with large-scale data processing capabilities.",
+    tech: "Flask, NumPy, Pandas, Scikit-learn, Geopy, Python",
     highlights: [
-      "Engineered ML model to predict NYC taxi fares from 55M trip records using feature engineering and ensemble methods, achieving RMSE: 2.72 and R²: 81.7%",
-      "Applied advanced feature engineering using Pandas, NumPy, and Geopy, implementing StandardScaler and OneHotEncoder for optimal model performance",
-      "Built interactive web interface with Flask and React.js for real-time fare predictions, serving 1000+ daily requests with sub-second response times",
+      "Developed machine learning model for taxi fare prediction using geospatial features (pickup/dropoff coordinates) processed with Geopy for distance calculations, implementing feature engineering with NumPy and Pandas for data preprocessing.",
+      "Trained regression models using Scikit-learn with cross-validation, achieving improved prediction accuracy through feature selection and hyperparameter tuning, processing large-scale NYC taxi dataset with efficient data pipelines.",
     ],
   },
 ];

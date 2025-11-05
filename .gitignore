@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# exclude txt files and md files (except README.md)
+*.txt
+*.md
+!README.md

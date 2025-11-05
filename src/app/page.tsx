@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, MutableRefObject, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Galaxy from "@/components/animated/Galaxy";
+import Silk from "@/components/animated/Silk";
 import GlareHover from "@/components/animated/GlareHover";
 import TextPressure from "@/components/animated/TextPressure";
 import RotatingText from "@/components/animated/RotatingText";
@@ -23,15 +24,16 @@ import {
 } from "react-icons/si";
 import { 
   MdWork, MdSchool, MdEmojiEvents, MdLocationOn, MdDateRange, MdContactMail, 
-  MdSettings, MdDarkMode, MdLightMode, MdFolderSpecial, MdArchitecture
+  MdSettings, MdDarkMode, MdLightMode, MdFolderSpecial, MdArchitecture, MdClose
 } from "react-icons/md";
 import { VscFolderLibrary, VscProject, VscMail, VscSettingsGear } from "react-icons/vsc";
+import { experiences, projects, education } from "@/data/resume";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement | null>;
   const { theme, toggleTheme } = useTheme();
-  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeExperienceFilter, setActiveExperienceFilter] = useState<string>("All");
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -90,15 +92,14 @@ export default function Home() {
 
   return (
       <div className={`relative min-h-screen w-full overflow-x-hidden ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
-      {/* Background Galaxy - Full Screen */}
-      <div className={`fixed inset-0 w-full h-full ${theme === 'light' ? 'opacity-10' : 'opacity-100'}`} style={{ zIndex: 1 }}>
-        <Galaxy
-          mouseRepulsion={true}
-          mouseInteraction={true}
-          density={1.5}
-          glowIntensity={theme === 'light' ? 0.1 : 0.5}
-          saturation={theme === 'light' ? 0.2 : 0.8}
-          hueShift={240}
+      {/* Background Silk - Full Screen */}
+      <div className={`fixed inset-0 w-full h-full ${theme === 'light' ? 'opacity-[0.15]' : 'opacity-[0.25]'}`} style={{ zIndex: 1, pointerEvents: 'none' }}>
+        <Silk
+          speed={5}
+          scale={1}
+          color="#A24457"
+          noiseIntensity={1.5}
+          rotation={0}
         />
       </div>
 
@@ -336,7 +337,7 @@ export default function Home() {
 
             {/* Filter Buttons */}
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {["All", "Full-time", "Internship", "Contract"].map((filter) => {
+              {["All", "Oracle", "Micron", "New York University"].map((filter) => {
                 const isActive = activeExperienceFilter === filter;
                 return (
                   <motion.button
@@ -367,164 +368,90 @@ export default function Home() {
             </div>
 
             <div className="space-y-8">
-              <ScrollRevealCard
-                index={0}
-                className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
-              >
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaBriefcase className="text-3xl text-purple-400" />
-                    </div>
-                  <div className="flex-1">
-                    <GradientText
-                      colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                      animationSpeed={4}
-                      showBorder={false}
-                      className="text-3xl font-bold mb-2 drop-shadow-sm"
-                    >
-                      Software Engineer
-                    </GradientText>
-                    <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 mb-3 flex-wrap">
-                      <div className="flex items-center gap-2">
-                        <FaBuilding className="text-lg" />
-                        <GradientText
-                          colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                          animationSpeed={5}
-                          showBorder={false}
-                          className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                        >
-                          Company Name
-                        </GradientText>
+              {experiences
+                .filter((exp) => {
+                  if (activeExperienceFilter === "All") return true;
+                  // Handle "Micron" matching "Micron Technology"
+                  if (activeExperienceFilter === "Micron") {
+                    return exp.company.includes("Micron");
+                  }
+                  return exp.company === activeExperienceFilter;
+                })
+                .map((exp, index) => (
+                  <ScrollRevealCard
+                    key={exp.id}
+                    index={index}
+                    className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
+                        <FaBriefcase className="text-3xl text-purple-400" />
                       </div>
-                      <div className="flex items-center gap-2">
-                        <FaCalendarAlt className="text-lg" />
+                      <div className="flex-1">
                         <GradientText
-                          colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                          animationSpeed={5}
+                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          animationSpeed={4}
                           showBorder={false}
-                          className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                          className="text-3xl font-bold mb-2 drop-shadow-sm"
                         >
-                          2023 - Present
+                          {exp.role}
                         </GradientText>
-                      </div>
-                    </div>
-                    <GradientText
-                      colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                      animationSpeed={6}
-                      showBorder={false}
-                      className="text-lg leading-relaxed text-gray-300"
-                    >
-                      Developed scalable backend systems using Java Spring Boot, optimized database queries, and implemented microservices architecture. Led performance tuning initiatives that improved response times by 40%.
-                    </GradientText>
-                  </div>
-                </div>
-              </ScrollRevealCard>
-
-              <ScrollRevealCard
-                index={1}
-                className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
-              >
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaBriefcase className="text-3xl text-purple-400" />
-                    </div>
-                  <div className="flex-1">
-                    <GradientText
-                      colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                      animationSpeed={4}
-                      showBorder={false}
-                      className="text-3xl font-bold mb-2 drop-shadow-sm"
-                    >
-                      Junior Developer
-                    </GradientText>
-                    <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 mb-3 flex-wrap">
-                      <div className="flex items-center gap-2">
-                        <FaBuilding className="text-lg" />
-                        <GradientText
-                          colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                          animationSpeed={5}
-                          showBorder={false}
-                          className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                        >
-                          Previous Company
-                        </GradientText>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FaCalendarAlt className="text-lg" />
-                        <GradientText
-                          colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                          animationSpeed={5}
-                          showBorder={false}
-                          className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                        >
-                          2022 - 2023
-                        </GradientText>
+                        <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 mb-3 flex-wrap">
+                          <div className="flex items-center gap-2">
+                            <FaBuilding className="text-lg" />
+                            <GradientText
+                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              animationSpeed={5}
+                              showBorder={false}
+                              className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                            >
+                              {exp.company}
+                            </GradientText>
+                          </div>
+                          {exp.location && (
+                            <div className="flex items-center gap-2">
+                              <MdLocationOn className="text-lg" />
+                              <GradientText
+                                colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                                animationSpeed={5}
+                                showBorder={false}
+                                className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                              >
+                                {exp.location}
+                              </GradientText>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2">
+                            <FaCalendarAlt className="text-lg" />
+                            <GradientText
+                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              animationSpeed={5}
+                              showBorder={false}
+                              className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                            >
+                              {exp.period}
+                            </GradientText>
+                          </div>
+                        </div>
+                        <ul className="space-y-2 mt-4">
+                          {exp.highlights.map((highlight, idx) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <span className="text-purple-400 mt-1.5">•</span>
+                              <GradientText
+                                colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
+                                animationSpeed={6}
+                                showBorder={false}
+                                className="text-lg leading-relaxed text-gray-300"
+                              >
+                                {highlight}
+                              </GradientText>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                    <GradientText
-                      colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                      animationSpeed={6}
-                      showBorder={false}
-                      className="text-lg leading-relaxed text-gray-300"
-                    >
-                      Built RESTful APIs, collaborated with cross-functional teams, and implemented CI/CD pipelines. Contributed to code reviews and helped mentor new team members.
-                    </GradientText>
-                  </div>
-                </div>
-              </ScrollRevealCard>
-
-              <ScrollRevealCard
-                index={2}
-                className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
-              >
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaBriefcase className="text-3xl text-purple-400" />
-                    </div>
-                  <div className="flex-1">
-                    <GradientText
-                      colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                      animationSpeed={4}
-                      showBorder={false}
-                      className="text-3xl font-bold mb-2 drop-shadow-sm"
-                    >
-                      Intern
-                    </GradientText>
-                    <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 mb-3 flex-wrap">
-                      <div className="flex items-center gap-2">
-                        <FaBuilding className="text-lg" />
-                        <GradientText
-                          colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                          animationSpeed={5}
-                          showBorder={false}
-                          className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                        >
-                          Startup Company
-                        </GradientText>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FaCalendarAlt className="text-lg" />
-                        <GradientText
-                          colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                          animationSpeed={5}
-                          showBorder={false}
-                          className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                        >
-                          2021 - 2022
-                        </GradientText>
-                      </div>
-                    </div>
-                    <GradientText
-                      colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                      animationSpeed={6}
-                      showBorder={false}
-                      className="text-lg leading-relaxed text-gray-300"
-                    >
-                      Gained hands-on experience with modern web technologies, participated in agile development practices, and contributed to production code.
-                    </GradientText>
-                  </div>
-                </div>
-              </ScrollRevealCard>
+                  </ScrollRevealCard>
+                ))}
             </div>
           </div>
         </section>
@@ -550,149 +477,292 @@ export default function Home() {
               />
             </div>
 
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {["All", "Computer Vision", "Deep Learning", "Frontend", "Generative AI", "Machine Learning"].map((category) => {
-                const isActive = activeCategory === category;
+
+            {/* Project Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project, index) => {
+                const techArray = project.tech.split(",").map((t) => t.trim());
+                
+                // Color scheme for different tech categories
+                const getTechColor = (tech: string) => {
+                  const techLower = tech.toLowerCase();
+                  if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
+                    return "bg-green-500/20 border-green-400/30 text-green-300";
+                  } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
+                    return "bg-blue-500/20 border-blue-400/30 text-blue-300";
+                  } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
+                    return "bg-orange-500/20 border-orange-400/30 text-orange-300";
+                  } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
+                    return "bg-yellow-500/20 border-yellow-400/30 text-yellow-300";
+                  } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
+                    return "bg-pink-500/20 border-pink-400/30 text-pink-300";
+                  } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
+                    return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                  } else {
+                    return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                  }
+                };
+
                 return (
-                  <motion.button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`relative px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                      isActive
-                        ? "text-white"
-                        : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-semibold"
-                    }`}
+                  <motion.div
+                    key={project.id}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedProject(project)}
+                    className="cursor-pointer"
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeFilter"
-                        className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 border border-purple-400/30 shadow-lg shadow-purple-500/25"
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                      />
-                    )}
-                    {!isActive && (
-                      <div className="absolute inset-0 rounded-xl bg-gray-100 dark:bg-black/40 border-2 border-gray-300 dark:border-white/10 backdrop-blur-sm" />
-                    )}
-                    <span className="relative z-10">{category}</span>
-                  </motion.button>
+                    <ScrollRevealCard
+                      index={index}
+                      className="p-6 rounded-[30px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none h-full transition-all duration-300 hover:border-purple-400/50 hover:shadow-lg hover:shadow-purple-500/20"
+                    >
+                      <div className="flex flex-col h-full">
+                        <GradientText
+                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-2xl font-bold mb-3 drop-shadow-sm"
+                        >
+                          {project.title}
+                        </GradientText>
+                        <p className="text-sm text-gray-300 mb-4 line-clamp-3 leading-relaxed">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {techArray.map((tech, techIndex) => (
+                            <span
+                              key={techIndex}
+                              className={`px-3 py-1 rounded-lg border-2 text-xs font-semibold shadow-sm ${getTechColor(tech)}`}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex gap-3 mt-auto pt-4">
+                          {project.links?.github && (
+                            <a
+                              href={project.links.github}
+                              onClick={(e) => e.stopPropagation()}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors text-sm font-semibold"
+                            >
+                              <FaGitAlt className="w-4 h-4" />
+                              GitHub
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                            </a>
+                          )}
+                          {project.links?.live && (
+                            <motion.a
+                              href={project.links.live}
+                              onClick={(e) => e.stopPropagation()}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors text-sm font-semibold"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              animate={{
+                                x: [0, 3, 0],
+                              }}
+                              transition={{
+                                repeat: Infinity,
+                                duration: 2,
+                                ease: "easeInOut",
+                              }}
+                            >
+                              <span className="relative">
+                                🚀 Live Demo
+                                <motion.span
+                                  className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full"
+                                  animate={{
+                                    scale: [1, 1.2, 1],
+                                    opacity: [1, 0.7, 1],
+                                  }}
+                                  transition={{
+                                    repeat: Infinity,
+                                    duration: 1.5,
+                                  }}
+                                />
+                              </span>
+                              <motion.svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                animate={{ rotate: [0, 15, 0] }}
+                                transition={{
+                                  repeat: Infinity,
+                                  duration: 2,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </motion.svg>
+                            </motion.a>
+                          )}
+                        </div>
+                      </div>
+                    </ScrollRevealCard>
+                  </motion.div>
                 );
               })}
             </div>
 
-            {/* Project Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Deep Learning Model",
-                  category: "Deep Learning",
-                  description: "Built a neural network for image classification using TensorFlow and PyTorch.",
-                  tech: ["Python", "TensorFlow", "PyTorch"],
-                  link: "#",
-                },
-                {
-                  title: "Computer Vision App",
-                  category: "Computer Vision",
-                  description: "Real-time object detection application using YOLO and OpenCV.",
-                  tech: ["Python", "OpenCV", "YOLO"],
-                  link: "#",
-                },
-                {
-                  title: "React Portfolio",
-                  category: "Frontend",
-                  description: "Modern portfolio website with animated components and smooth transitions.",
-                  tech: ["React", "Next.js", "TypeScript"],
-                  link: "#",
-                },
-                {
-                  title: "Generative AI Tool",
-                  category: "Generative AI",
-                  description: "Text-to-image generation tool using Stable Diffusion API.",
-                  tech: ["Python", "Stable Diffusion", "FastAPI"],
-                  link: "#",
-                },
-                {
-                  title: "ML Prediction System",
-                  category: "Machine Learning",
-                  description: "Time series forecasting model for stock price prediction.",
-                  tech: ["Python", "Scikit-learn", "Pandas"],
-                  link: "#",
-                },
-                {
-                  title: "Vision Transformer",
-                  category: "Computer Vision",
-                  description: "Implemented Vision Transformer for image recognition tasks.",
-                  tech: ["Python", "PyTorch", "Transformers"],
-                  link: "#",
-                },
-              ]
-                .filter((project) => activeCategory === "All" || project.category === activeCategory)
-                .map((project, index) => (
-                  <ScrollRevealCard
-                    key={project.title}
-                    index={index}
-                    className="p-6 rounded-[30px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
+            {/* Project Modal */}
+            <AnimatePresence>
+              {selectedProject && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setSelectedProject(null)}
+                    className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
                   >
-                    <div className="flex flex-col h-full">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-2xl font-bold mb-3 drop-shadow-sm"
-                      >
-                        {project.title}
-                      </GradientText>
-                      <GradientText
-                        colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                        animationSpeed={5}
-                        showBorder={false}
-                        className="text-sm font-medium mb-4 text-purple-700 dark:text-purple-300 font-semibold"
-                      >
-                        {project.category}
-                      </GradientText>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-base leading-relaxed mb-4 flex-grow"
-                      >
-                        {project.description}
-                      </GradientText>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tech.map((tech, techIndex) => (
-                          <span
-                            key={techIndex}
-                            className="px-3 py-1 rounded-lg bg-purple-100 dark:bg-purple-500/20 border-2 border-purple-300 dark:border-purple-400/30 text-xs text-purple-800 dark:text-purple-300 font-semibold shadow-sm"
-                          >
-                            {tech}
-                          </span>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.8, y: 50 }}
+                      onClick={(e) => e.stopPropagation()}
+                      className="bg-gradient-to-br from-purple-900/95 to-purple-700/95 backdrop-blur-md border-2 border-purple-500/30 rounded-[40px] p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto text-white shadow-2xl"
+                    >
+                      <div className="flex items-start justify-between mb-6">
+                        <GradientText
+                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-3xl font-bold drop-shadow-sm"
+                        >
+                          {selectedProject.title}
+                        </GradientText>
+                        <motion.button
+                          whileHover={{ scale: 1.1, rotate: 90 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => setSelectedProject(null)}
+                          className="p-2 rounded-full bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-300 transition-colors"
+                        >
+                          <MdClose className="w-6 h-6" />
+                        </motion.button>
+                      </div>
+                      <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                        {selectedProject.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {selectedProject.tech.split(",").map((tech, index) => {
+                          const techTrimmed = tech.trim();
+                          const getTechColor = (tech: string) => {
+                            const techLower = tech.toLowerCase();
+                            if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
+                              return "bg-green-500/20 border-green-400/30 text-green-300";
+                            } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
+                              return "bg-blue-500/20 border-blue-400/30 text-blue-300";
+                            } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
+                              return "bg-orange-500/20 border-orange-400/30 text-orange-300";
+                            } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
+                              return "bg-yellow-500/20 border-yellow-400/30 text-yellow-300";
+                            } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
+                              return "bg-pink-500/20 border-pink-400/30 text-pink-300";
+                            } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
+                              return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                            } else {
+                              return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                            }
+                          };
+                          return (
+                            <span
+                              key={index}
+                              className={`px-3 py-1 rounded-lg border-2 text-sm font-semibold shadow-sm ${getTechColor(techTrimmed)}`}
+                            >
+                              {techTrimmed}
+                            </span>
+                          );
+                        })}
+                      </div>
+                      <div className="space-y-3 mb-6">
+                        <h3 className="text-xl font-bold text-purple-300 mb-3">Key Highlights:</h3>
+                        {selectedProject.highlights.map((highlight, idx) => (
+                          <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-purple-900/30 border border-purple-500/20">
+                            <span className="text-purple-400 mt-1 text-lg">•</span>
+                            <p className="text-base leading-relaxed text-gray-300 flex-1">
+                              {highlight}
+                            </p>
+                          </div>
                         ))}
                       </div>
-                      <a
-                        href={project.link}
-                        className="inline-flex items-center gap-2 text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors text-sm font-semibold"
-                      >
-                        View Project
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </ScrollRevealCard>
-                ))}
-            </div>
+                      {(selectedProject.links?.github || selectedProject.links?.live) && (
+                        <div className="flex gap-4 pt-4 border-t border-purple-500/30">
+                          {selectedProject.links.github && (
+                            <a
+                              href={selectedProject.links.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-300 hover:text-purple-200 transition-all font-semibold"
+                            >
+                              <FaGitAlt className="w-5 h-5" />
+                              View on GitHub
+                            </a>
+                          )}
+                          {selectedProject.links.live && (
+                            <motion.a
+                              href={selectedProject.links.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold transition-all"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <span className="relative">
+                                🚀 Live Demo
+                                <motion.span
+                                  className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full"
+                                  animate={{
+                                    scale: [1, 1.3, 1],
+                                    opacity: [1, 0.6, 1],
+                                  }}
+                                  transition={{
+                                    repeat: Infinity,
+                                    duration: 1.5,
+                                  }}
+                                />
+                              </span>
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                            </motion.a>
+                          )}
+                        </div>
+                      )}
+                    </motion.div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
         </section>
 
@@ -719,111 +789,75 @@ export default function Home() {
                   rootMargin="-300px"
                   />
                 </div>
-                <ScrollRevealCard
-                  index={0}
-                  className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none shadow-[0_8px_32px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_48px_rgba(139,92,246,0.25)] transition-all duration-300"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaGraduationCap className="text-3xl text-purple-400" />
-                    </div>
-                    <div className="flex-1">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-3xl font-bold mb-2 drop-shadow-sm"
-                      >
-                        Master of Science in Computer Science
-                      </GradientText>
-                      <div className="flex items-center gap-4 mb-3 flex-wrap">
+                {education.map((edu, index) => (
+                  <ScrollRevealCard
+                    key={edu.id}
+                    index={index}
+                    className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none shadow-[0_8px_32px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_48px_rgba(139,92,246,0.25)] transition-all duration-300"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
+                        <FaGraduationCap className="text-3xl text-purple-400" />
+                      </div>
+                      <div className="flex-1">
+                        <GradientText
+                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-3xl font-bold mb-2 drop-shadow-sm"
+                        >
+                          {edu.degree}
+                        </GradientText>
+                        <div className="flex items-center gap-4 mb-3 flex-wrap">
+                          <div className="flex items-center gap-2">
+                            <MdLocationOn className="text-lg text-purple-600 dark:text-purple-400" />
+                            <GradientText
+                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              animationSpeed={5}
+                              showBorder={false}
+                              className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                            >
+                              {edu.institution}
+                            </GradientText>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
+                            <GradientText
+                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              animationSpeed={5}
+                              showBorder={false}
+                              className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                            >
+                              {edu.period}
+                            </GradientText>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-purple-600 dark:text-purple-400 font-semibold">GPA:</span>
+                            <GradientText
+                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              animationSpeed={5}
+                              showBorder={false}
+                              className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                            >
+                              {edu.gpa}
+                            </GradientText>
+                          </div>
+                        </div>
                         <div className="flex items-center gap-2">
                           <MdLocationOn className="text-lg text-purple-600 dark:text-purple-400" />
                           <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
+                            colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
+                            animationSpeed={6}
                             showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
+                            className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
                           >
-                            New York University (NYU)
-                          </GradientText>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
-                          <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
-                            showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                          >
-                            2023 - 2025
+                            {edu.location}
                           </GradientText>
                         </div>
                       </div>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-lg leading-relaxed text-gray-800 dark:text-gray-300"
-                      >
-                        Specialized in distributed systems, machine learning, and software engineering. Relevant coursework includes Advanced Algorithms, Database Systems, and Cloud Computing.
-                      </GradientText>
                     </div>
-                  </div>
-                </ScrollRevealCard>
-
-                <ScrollRevealCard
-                  index={1}
-                  className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaGraduationCap className="text-3xl text-purple-400" />
-                    </div>
-                    <div className="flex-1">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-3xl font-bold mb-2 drop-shadow-sm"
-                      >
-                        Bachelor of Science in Computer Science
-                      </GradientText>
-                      <div className="flex items-center gap-4 mb-3 flex-wrap">
-                        <div className="flex items-center gap-2">
-                          <MdLocationOn className="text-lg text-purple-600 dark:text-purple-400" />
-                          <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
-                            showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                          >
-                            University Name
-                          </GradientText>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
-                          <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
-                            showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                          >
-                            2019 - 2023
-                          </GradientText>
-                        </div>
-                      </div>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-lg leading-relaxed text-gray-800 dark:text-gray-300"
-                      >
-                        Graduated with honors. Focused on software engineering, data structures, and algorithms. Active member of the Computer Science Club.
-                      </GradientText>
-                    </div>
-                  </div>
-                </ScrollRevealCard>
+                  </ScrollRevealCard>
+                ))}
               </div>
 
               {/* Decorative Divider */}
@@ -850,13 +884,15 @@ export default function Home() {
                   rootMargin="-300px"
                   />
                 </div>
+                
+                {/* Publication */}
                 <ScrollRevealCard
                   index={0}
                   className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none shadow-[0_8px_32px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_48px_rgba(139,92,246,0.25)] transition-all duration-300"
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaTrophy className="text-3xl text-purple-400" />
+                      <FaCode className="text-3xl text-purple-400" />
                     </div>
                     <div className="flex-1">
                       <GradientText
@@ -865,33 +901,32 @@ export default function Home() {
                         showBorder={false}
                         className="text-3xl font-bold mb-2 drop-shadow-sm"
                       >
-                        Hackathon Winner
+                        Research Publication
                       </GradientText>
-                      <div className="flex items-center gap-4 mb-3 flex-wrap">
-                        <div className="flex items-center gap-2">
-                          <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
-                          <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
-                            showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                          >
-                            2024
-                          </GradientText>
-                        </div>
-                      </div>
                       <GradientText
                         colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
                         animationSpeed={6}
                         showBorder={false}
-                        className="text-lg leading-relaxed text-gray-800 dark:text-gray-300"
+                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300 mb-3"
                       >
-                        Won first place in a 48-hour hackathon by building an innovative solution using machine learning and cloud technologies. Recognized for technical excellence and creative problem-solving.
+                        Published research work in computer science. Contributing to the advancement of technology through innovative research and development.
                       </GradientText>
+                      <a
+                        href="https://example.com/publication"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors text-sm font-semibold underline"
+                      >
+                        View Publication
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
                     </div>
                   </div>
                 </ScrollRevealCard>
 
+                {/* Girls Who Code */}
                 <ScrollRevealCard
                   index={1}
                   className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
@@ -907,40 +942,28 @@ export default function Home() {
                         showBorder={false}
                         className="text-3xl font-bold mb-2 drop-shadow-sm"
                       >
-                        Dean's List
+                        Member - Girls Who Code
                       </GradientText>
-                      <div className="flex items-center gap-4 mb-3 flex-wrap">
-                        <div className="flex items-center gap-2">
-                          <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
-                          <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
-                            showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                          >
-                            2023 - 2024
-                          </GradientText>
-                        </div>
-                      </div>
                       <GradientText
                         colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
                         animationSpeed={6}
                         showBorder={false}
-                        className="text-lg leading-relaxed text-gray-800 dark:text-gray-300"
+                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
                       >
-                        Maintained exceptional academic performance, achieving Dean's List recognition for multiple semesters. Demonstrated excellence in both theoretical knowledge and practical application.
+                        Active member of Girls Who Code, participating in coding workshops, mentoring sessions, and events that empower women in tech. Strengthening programming, leadership, and networking skills across diverse domains in computer science.
                       </GradientText>
                     </div>
                   </div>
                 </ScrollRevealCard>
 
+                {/* Software Engineer Fellow */}
                 <ScrollRevealCard
                   index={2}
                   className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaTrophy className="text-3xl text-purple-400" />
+                      <MdArchitecture className="text-3xl text-purple-400" />
                     </div>
                     <div className="flex-1">
                       <GradientText
@@ -949,28 +972,45 @@ export default function Home() {
                         showBorder={false}
                         className="text-3xl font-bold mb-2 drop-shadow-sm"
                       >
-                        Open Source Contributor
+                        Software Engineer Fellow
                       </GradientText>
-                      <div className="flex items-center gap-4 mb-3 flex-wrap">
-                        <div className="flex items-center gap-2">
-                          <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
-                          <GradientText
-                            colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
-                            animationSpeed={5}
-                            showBorder={false}
-                            className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
-                          >
-                            2022 - Present
-                          </GradientText>
-                        </div>
-                      </div>
                       <GradientText
                         colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
                         animationSpeed={6}
                         showBorder={false}
-                        className="text-lg leading-relaxed text-gray-800 dark:text-gray-300"
+                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
                       >
-                        Active contributor to multiple open-source projects. Made significant contributions to popular frameworks and libraries, helping improve developer experience for thousands of users.
+                        As a Software Engineer Fellow, collaborating on technical projects and problem-solving challenges focused on backend systems, data pipelines, and AI applications. Contributing to innovative solutions and advancing technical expertise.
+                      </GradientText>
+                    </div>
+                  </div>
+                </ScrollRevealCard>
+
+                {/* State Level Bharatnatyam Dancer */}
+                <ScrollRevealCard
+                  index={3}
+                  className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
+                      <MdEmojiEvents className="text-3xl text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <GradientText
+                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                        animationSpeed={4}
+                        showBorder={false}
+                        className="text-3xl font-bold mb-2 drop-shadow-sm"
+                      >
+                        State Level Bharatnatyam Dancer
+                      </GradientText>
+                      <GradientText
+                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
+                        animationSpeed={6}
+                        showBorder={false}
+                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
+                      >
+                        Achieved recognition as a State Level Bharatnatyam dancer, showcasing dedication to cultural arts and performing arts excellence alongside technical pursuits.
                       </GradientText>
                     </div>
                   </div>
