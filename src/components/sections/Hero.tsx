@@ -1,7 +1,7 @@
 "use client";
 
-import { TextPressure } from "@/components/animated/TextPressure";
-import { ShinyText } from "@/components/animated/ShinyText";
+import TextPressure from "@/components/animated/TextPressure";
+import ShinyText from "@/components/animated/ShinyText";
 import { motion } from "framer-motion";
 
 export default function Hero() {
