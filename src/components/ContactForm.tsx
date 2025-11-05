@@ -3,12 +3,14 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface ContactFormProps {
   className?: string;
 }
 
 export default function ContactForm({ className = "" }: ContactFormProps) {
+  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -122,8 +124,8 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
     >
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-          Name <span className="text-purple-400">*</span>
+        <label htmlFor="name" className={`block text-sm font-medium mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
+          Name <span className={theme === 'light' ? 'text-gray-700' : 'text-purple-400'}>*</span>
         </label>
         <input
           type="text"
@@ -139,8 +141,8 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-          Email <span className="text-purple-400">*</span>
+        <label htmlFor="email" className={`block text-sm font-medium mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
+          Email <span className={theme === 'light' ? 'text-gray-700' : 'text-purple-400'}>*</span>
         </label>
         <input
           type="email"
@@ -156,8 +158,8 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
 
       {/* Subject Field */}
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-          Subject <span className="text-purple-400">*</span>
+        <label htmlFor="subject" className={`block text-sm font-medium mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
+          Subject <span className={theme === 'light' ? 'text-gray-700' : 'text-purple-400'}>*</span>
         </label>
         <input
           type="text"
@@ -173,8 +175,8 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
 
       {/* Message Field */}
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-          Message <span className="text-purple-400">*</span>
+        <label htmlFor="message" className={`block text-sm font-medium mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
+          Message <span className={theme === 'light' ? 'text-gray-700' : 'text-purple-400'}>*</span>
         </label>
         <textarea
           id="message"
@@ -247,11 +249,11 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
         )}
       </motion.button>
 
-      <p className="text-xs text-gray-400 text-center">
+      <p className={`text-center ${theme === 'light' ? 'text-base text-gray-900 font-medium' : 'text-xs text-gray-400'}`}>
         Or email me directly at{" "}
         <a
           href="mailto:ssn9077@nyu.edu"
-          className="text-purple-400 hover:text-purple-300 transition-colors"
+          className={`transition-colors ${theme === 'light' ? 'text-gray-900 hover:text-gray-700 font-semibold' : 'text-purple-400 hover:text-purple-300'}`}
         >
           ssn9077@nyu.edu
         </a>

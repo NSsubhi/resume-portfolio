@@ -35,6 +35,19 @@ export default function Home() {
   const [activeExperienceFilter, setActiveExperienceFilter] = useState<string>("All");
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
+  // Theme-based gradient colors
+  const titleGradientColors = theme === 'light' 
+    ? ["#4c1d95", "#9f1239", "#4c1d95", "#9f1239", "#4c1d95"] // Very dark purple/pink for light mode (better contrast)
+    : ["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]; // Light purple/pink for dark mode
+  
+  const subtitleGradientColors = theme === 'light'
+    ? ["#5b21b6", "#be185d", "#5b21b6"] // Dark purple/pink for light mode (better contrast)
+    : ["#c4b5fd", "#f0abfc", "#c4b5fd"]; // Light purple/pink for dark mode
+  
+  const textGradientColors = theme === 'light'
+    ? ["#581c87", "#a21caf", "#581c87", "#a21caf", "#581c87"] // Dark purple/magenta for light mode (better contrast)
+    : ["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]; // Very light purple/pink for dark mode
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -44,27 +57,27 @@ export default function Home() {
 
   const dockItems = [
     { 
-      icon: <VscFolderLibrary size={20} className="text-purple-400" />, 
+      icon: <VscFolderLibrary size={20} className="text-purple-700 dark:text-purple-400" />, 
       label: 'Work Experience', 
       onClick: () => scrollToSection('experience') 
     },
     { 
-      icon: <VscProject size={20} className="text-purple-400" />, 
+      icon: <VscProject size={20} className="text-purple-700 dark:text-purple-400" />, 
       label: 'Projects', 
       onClick: () => scrollToSection('projects') 
     },
     { 
-      icon: <MdSettings size={20} className="text-purple-400" />, 
+      icon: <MdSettings size={20} className="text-purple-700 dark:text-purple-400" />, 
       label: 'Skills', 
       onClick: () => scrollToSection('skills') 
     },
     { 
-      icon: <VscMail size={20} className="text-purple-400" />, 
+      icon: <VscMail size={20} className="text-purple-700 dark:text-purple-400" />, 
       label: 'Contact', 
       onClick: () => scrollToSection('contact') 
     },
     { 
-      icon: theme === 'dark' ? <MdLightMode size={20} className="text-purple-400" /> : <MdDarkMode size={20} className="text-purple-400" />, 
+      icon: theme === 'dark' ? <MdLightMode size={20} className="text-purple-400" /> : <MdDarkMode size={20} className="text-purple-800 dark:text-purple-400" />, 
       label: theme === 'dark' ? 'Light Mode' : 'Dark Mode', 
       onClick: toggleTheme 
     },
@@ -72,26 +85,26 @@ export default function Home() {
 
   // Icon mapping for skills
   const skillIcons: Record<string, React.ReactNode> = {
-    "Java": <FaJava className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Spring Boot": <SiSpringboot className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Python": <FaPython className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "JavaScript": <FaJs className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "TypeScript": <SiTypescript className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "React": <FaReact className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Next.js": <SiNextdotjs className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Node.js": <FaNodeJs className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "PostgreSQL": <SiPostgresql className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "MongoDB": <SiMongodb className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Docker": <FaDocker className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Kubernetes": <SiKubernetes className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "AWS": <FaAws className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Git": <FaGitAlt className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "CI/CD": <SiJenkins className="text-3xl text-purple-600 dark:text-purple-400" />,
-    "Microservices": <MdArchitecture className="text-3xl text-purple-600 dark:text-purple-400" />,
+    "Java": <FaJava className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Spring Boot": <SiSpringboot className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Python": <FaPython className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "JavaScript": <FaJs className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "TypeScript": <SiTypescript className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "React": <FaReact className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Next.js": <SiNextdotjs className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Node.js": <FaNodeJs className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "PostgreSQL": <SiPostgresql className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "MongoDB": <SiMongodb className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Docker": <FaDocker className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Kubernetes": <SiKubernetes className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "AWS": <FaAws className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Git": <FaGitAlt className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "CI/CD": <SiJenkins className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
+    "Microservices": <MdArchitecture className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />,
   };
 
   return (
-      <div className={`relative min-h-screen w-full overflow-x-hidden ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
+      <div className={`relative min-h-screen w-full overflow-x-hidden ${theme === 'dark' ? 'bg-black' : ''}`} style={theme === 'light' ? { backgroundColor: '#FEDE86' } : {}}>
       {/* Background Silk - Full Screen */}
       <div className={`fixed inset-0 w-full h-full ${theme === 'light' ? 'opacity-[0.15]' : 'opacity-[0.25]'}`} style={{ zIndex: 1, pointerEvents: 'none' }}>
         <Silk
@@ -128,10 +141,10 @@ export default function Home() {
           </div>
 
           {/* Title with Rotating Text */}
-          <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2 -mt-2">
+          <div className="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-400 mb-2 -mt-2">
             <RotatingText
               texts={["Software Engineer", "student at NYU"]}
-              mainClassName="px-2 sm:px-2 md:px-3 bg-purple-400/20 text-purple-400 overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+              mainClassName="px-2 sm:px-2 md:px-3 bg-purple-400/20 text-purple-700 dark:text-purple-400 overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
               staggerFrom={"last"}
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -160,29 +173,6 @@ export default function Home() {
 
           {/* Social Icons */}
           <div className="flex items-center gap-4 pt-4">
-            {/* Resume */}
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-16 h-16 rounded-full bg-gray-100 dark:bg-white/10 border-2 border-gray-300 dark:border-white/20 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-white/20 transition-colors shadow-md dark:shadow-none"
-              aria-label="Resume"
-            >
-              <svg
-                className="w-8 h-8 text-gray-800 dark:text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-            </a>
-
             {/* GitHub */}
             <a
               href="https://github.com"
@@ -319,19 +309,19 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-8 md:px-16">
             <div className="flex items-center gap-4 mb-12 group">
               <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border-2 border-purple-400/30 shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20 transition-all duration-300">
-                <MdWork className="text-5xl text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                <MdWork className="text-5xl text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
               </div>
               <SplitText
                 text="Work Experience"
                 tag="h2"
-                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm"
-                delay={50}
-                duration={0.6}
+                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm leading-[1.2] pb-2"
+                delay={10}
+                duration={0.2}
                 splitType="chars"
-                from={{ opacity: 0, y: 40 }}
+                from={{ opacity: 0, y: 20 }}
                 to={{ opacity: 1, y: 0 }}
-                threshold={0.15}
-                rootMargin="-150px"
+                threshold={0.5}
+                rootMargin="100px"
               />
             </div>
 
@@ -385,11 +375,11 @@ export default function Home() {
                   >
                     <div className="flex items-start gap-4">
                       <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                        <FaBriefcase className="text-3xl text-purple-400" />
+                        <FaBriefcase className="text-3xl text-purple-700 dark:text-purple-400" />
                       </div>
                       <div className="flex-1">
                         <GradientText
-                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          colors={titleGradientColors}
                           animationSpeed={4}
                           showBorder={false}
                           className="text-3xl font-bold mb-2 drop-shadow-sm"
@@ -400,7 +390,7 @@ export default function Home() {
                           <div className="flex items-center gap-2">
                             <FaBuilding className="text-lg" />
                             <GradientText
-                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              colors={subtitleGradientColors}
                               animationSpeed={5}
                               showBorder={false}
                               className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
@@ -412,7 +402,7 @@ export default function Home() {
                             <div className="flex items-center gap-2">
                               <MdLocationOn className="text-lg" />
                               <GradientText
-                                colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                                colors={subtitleGradientColors}
                                 animationSpeed={5}
                                 showBorder={false}
                                 className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
@@ -424,7 +414,7 @@ export default function Home() {
                           <div className="flex items-center gap-2">
                             <FaCalendarAlt className="text-lg" />
                             <GradientText
-                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              colors={subtitleGradientColors}
                               animationSpeed={5}
                               showBorder={false}
                               className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
@@ -436,9 +426,9 @@ export default function Home() {
                         <ul className="space-y-2 mt-4">
                           {exp.highlights.map((highlight, idx) => (
                             <li key={idx} className="flex items-start gap-3">
-                              <span className="text-purple-400 mt-1.5">•</span>
+                              <span className="text-purple-700 dark:text-purple-400 mt-1.5">•</span>
                               <GradientText
-                                colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
+                                colors={textGradientColors}
                                 animationSpeed={6}
                                 showBorder={false}
                                 className="text-lg leading-relaxed text-gray-700 dark:text-gray-300"
@@ -461,19 +451,19 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-8 md:px-16">
             <div className="flex items-center gap-4 mb-12 group">
               <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20 transition-all duration-300">
-                <VscProject className="text-5xl text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                <VscProject className="text-5xl text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
               </div>
               <SplitText
                 text="Projects"
                 tag="h2"
-                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm"
-                delay={50}
-                duration={0.6}
+                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm leading-[1.2] pb-2"
+                delay={5}
+                duration={0.15}
                 splitType="chars"
-                from={{ opacity: 0, y: 40 }}
+                from={{ opacity: 0.5, y: 10 }}
                 to={{ opacity: 1, y: 0 }}
-                threshold={0.15}
-                rootMargin="-150px"
+                threshold={0.3}
+                rootMargin="200px"
               />
             </div>
 
@@ -486,20 +476,40 @@ export default function Home() {
                 // Color scheme for different tech categories
                 const getTechColor = (tech: string) => {
                   const techLower = tech.toLowerCase();
-                  if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
-                    return "bg-green-500/20 border-green-400/30 text-green-700 dark:text-green-300";
-                  } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
-                    return "bg-blue-500/20 border-blue-400/30 text-blue-700 dark:text-blue-300";
-                  } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
-                    return "bg-orange-500/20 border-orange-400/30 text-orange-700 dark:text-orange-300";
-                  } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
-                    return "bg-yellow-500/20 border-yellow-400/30 text-yellow-700 dark:text-yellow-300";
-                  } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
-                    return "bg-pink-500/20 border-pink-400/30 text-pink-700 dark:text-pink-300";
-                  } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
-                    return "bg-purple-500/20 border-purple-400/30 text-purple-700 dark:text-purple-300";
+                  if (theme === 'light') {
+                    // Light mode - use darker, more saturated colors for better contrast
+                    if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
+                      return "bg-green-600 border-green-700 text-white";
+                    } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
+                      return "bg-blue-600 border-blue-700 text-white";
+                    } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
+                      return "bg-orange-600 border-orange-700 text-white";
+                    } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
+                      return "bg-yellow-600 border-yellow-700 text-gray-900";
+                    } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
+                      return "bg-pink-600 border-pink-700 text-white";
+                    } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
+                      return "bg-purple-600 border-purple-700 text-white";
+                    } else {
+                      return "bg-gray-700 border-gray-800 text-white";
+                    }
                   } else {
-                    return "bg-purple-500/20 border-purple-400/30 text-purple-700 dark:text-purple-300";
+                    // Dark mode - original colors
+                    if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
+                      return "bg-green-500/20 border-green-400/30 text-green-300";
+                    } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
+                      return "bg-blue-500/20 border-blue-400/30 text-blue-300";
+                    } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
+                      return "bg-orange-500/20 border-orange-400/30 text-orange-300";
+                    } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
+                      return "bg-yellow-500/20 border-yellow-400/30 text-yellow-300";
+                    } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
+                      return "bg-pink-500/20 border-pink-400/30 text-pink-300";
+                    } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
+                      return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                    } else {
+                      return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                    }
                   }
                 };
 
@@ -513,11 +523,12 @@ export default function Home() {
                   >
                     <ScrollRevealCard
                       index={index}
+                      staggerDelay={0.08}
                       className="p-6 rounded-[30px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none h-full transition-all duration-300 hover:border-purple-400/50 hover:shadow-lg hover:shadow-purple-500/20"
                     >
                       <div className="flex flex-col h-full">
                         <GradientText
-                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          colors={titleGradientColors}
                           animationSpeed={4}
                           showBorder={false}
                           className="text-2xl font-bold mb-3 drop-shadow-sm"
@@ -640,14 +651,14 @@ export default function Home() {
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.8, y: 50 }}
                       onClick={(e) => e.stopPropagation()}
-                      className="bg-gradient-to-br from-purple-900/95 to-purple-700/95 backdrop-blur-md border-2 border-purple-500/30 rounded-[40px] p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto text-white shadow-2xl"
+                      className={`${theme === 'light' ? 'bg-[#FEDE86]' : 'bg-gradient-to-br from-purple-900/95 to-purple-700/95'} backdrop-blur-md border-2 ${theme === 'light' ? 'border-gray-400' : 'border-purple-500/30'} rounded-[40px] p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto ${theme === 'light' ? 'text-gray-900' : 'text-white'} shadow-2xl`}
                     >
                       <div className="flex items-start justify-between mb-6">
                         <GradientText
-                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          colors={titleGradientColors}
                           animationSpeed={4}
                           showBorder={false}
-                          className="text-3xl font-bold drop-shadow-sm"
+                          className={`text-3xl font-bold drop-shadow-sm ${theme === 'light' ? 'text-gray-900' : ''}`}
                         >
                           {selectedProject.title}
                         </GradientText>
@@ -655,12 +666,16 @@ export default function Home() {
                           whileHover={{ scale: 1.1, rotate: 90 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={() => setSelectedProject(null)}
-                          className="p-2 rounded-full bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-700 dark:text-purple-300 transition-colors"
+                          className={`p-2 rounded-full border-2 transition-colors ${
+                            theme === 'light'
+                              ? 'bg-gray-800 hover:bg-gray-900 border-gray-700 text-white'
+                              : 'bg-purple-500/20 hover:bg-purple-500/30 border-purple-400/30 text-purple-300'
+                          }`}
                         >
                           <MdClose className="w-6 h-6" />
                         </motion.button>
                       </div>
-                      <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                      <p className={`text-lg mb-6 leading-relaxed ${theme === 'light' ? 'text-gray-800' : 'text-gray-300'}`}>
                         {selectedProject.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mb-6">
@@ -695,11 +710,11 @@ export default function Home() {
                         })}
                       </div>
                       <div className="space-y-3 mb-6">
-                        <h3 className="text-xl font-bold text-purple-700 dark:text-purple-300 mb-3">Key Highlights:</h3>
+                        <h3 className={`text-xl font-bold mb-3 ${theme === 'light' ? 'text-gray-900' : 'text-purple-300'}`}>Key Highlights:</h3>
                         {selectedProject.highlights.map((highlight, idx) => (
-                          <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-purple-900/30 border border-purple-500/20">
-                            <span className="text-purple-400 mt-1 text-lg">•</span>
-                            <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 flex-1">
+                          <div key={idx} className={`flex items-start gap-3 p-3 rounded-lg border ${theme === 'light' ? 'bg-white/50 border-gray-300' : 'bg-purple-900/30 border-purple-500/20'}`}>
+                            <span className={`mt-1 text-lg ${theme === 'light' ? 'text-gray-900' : 'text-purple-400'}`}>•</span>
+                            <p className={`text-base leading-relaxed flex-1 ${theme === 'light' ? 'text-gray-800' : 'text-gray-300'}`}>
                               {highlight}
                             </p>
                           </div>
@@ -712,7 +727,11 @@ export default function Home() {
                               href={selectedProject.links.github}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 transition-all font-semibold"
+                              className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 transition-all font-semibold ${
+                                theme === 'light' 
+                                  ? 'bg-gray-800 hover:bg-gray-900 border-gray-700 text-white hover:text-white' 
+                                  : 'bg-purple-500/20 hover:bg-purple-500/30 border-purple-400/30 text-purple-300 hover:text-purple-200'
+                              }`}
                             >
                               <FaGitAlt className="w-5 h-5" />
                               View on GitHub
@@ -723,7 +742,11 @@ export default function Home() {
                               href={selectedProject.links.live}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold transition-all"
+                              className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all ${
+                                theme === 'light'
+                                  ? 'bg-gradient-to-r from-purple-800 to-pink-700 hover:from-purple-900 hover:to-pink-800 text-white'
+                                  : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white'
+                              }`}
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
@@ -774,19 +797,19 @@ export default function Home() {
               <div className="space-y-8">
                 <div className="flex items-center gap-4 group mb-8">
                   <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20 transition-all duration-300">
-                    <MdSchool className="text-5xl text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                    <MdSchool className="text-5xl text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
                   </div>
                   <SplitText
                     text="Education"
                     tag="h2"
                     className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm"
-                    delay={50}
-                    duration={0.6}
+                    delay={10}
+                    duration={0.2}
                     splitType="chars"
-                    from={{ opacity: 0, y: 40 }}
+                    from={{ opacity: 0, y: 20 }}
                     to={{ opacity: 1, y: 0 }}
-                    threshold={0.3}
-                  rootMargin="-300px"
+                    threshold={0.5}
+                  rootMargin="100px"
                   />
                 </div>
                 {education.map((edu, index) => (
@@ -797,11 +820,11 @@ export default function Home() {
                   >
                     <div className="flex items-start gap-4">
                       <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                        <FaGraduationCap className="text-3xl text-purple-400" />
+                        <FaGraduationCap className="text-3xl text-purple-700 dark:text-purple-400" />
                       </div>
                       <div className="flex-1">
                         <GradientText
-                          colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
+                          colors={titleGradientColors}
                           animationSpeed={4}
                           showBorder={false}
                           className="text-3xl font-bold mb-2 drop-shadow-sm"
@@ -812,7 +835,7 @@ export default function Home() {
                           <div className="flex items-center gap-2">
                             <MdLocationOn className="text-lg text-purple-600 dark:text-purple-400" />
                             <GradientText
-                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              colors={subtitleGradientColors}
                               animationSpeed={5}
                               showBorder={false}
                               className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
@@ -823,7 +846,7 @@ export default function Home() {
                           <div className="flex items-center gap-2">
                             <MdDateRange className="text-lg text-purple-600 dark:text-purple-400" />
                             <GradientText
-                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              colors={subtitleGradientColors}
                               animationSpeed={5}
                               showBorder={false}
                               className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
@@ -834,7 +857,7 @@ export default function Home() {
                           <div className="flex items-center gap-2">
                             <span className="text-purple-600 dark:text-purple-400 font-semibold">GPA:</span>
                             <GradientText
-                              colors={["#c4b5fd", "#f0abfc", "#c4b5fd"]}
+                              colors={subtitleGradientColors}
                               animationSpeed={5}
                               showBorder={false}
                               className="text-base font-medium text-gray-800 dark:text-gray-300 font-semibold"
@@ -846,7 +869,7 @@ export default function Home() {
                         <div className="flex items-center gap-2">
                           <MdLocationOn className="text-lg text-purple-600 dark:text-purple-400" />
                           <GradientText
-                            colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
+                            colors={textGradientColors}
                             animationSpeed={6}
                             showBorder={false}
                             className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
@@ -869,19 +892,19 @@ export default function Home() {
               <div className="space-y-8">
                 <div className="flex items-center gap-4 group mb-8">
                   <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20 transition-all duration-300">
-                    <MdEmojiEvents className="text-5xl text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                    <MdEmojiEvents className="text-5xl text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
                   </div>
                   <SplitText
                     text="Achievements"
                     tag="h2"
                     className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm"
-                    delay={50}
-                    duration={0.6}
+                    delay={10}
+                    duration={0.2}
                     splitType="chars"
-                    from={{ opacity: 0, y: 40 }}
+                    from={{ opacity: 0, y: 20 }}
                     to={{ opacity: 1, y: 0 }}
-                    threshold={0.3}
-                  rootMargin="-300px"
+                    threshold={0.5}
+                  rootMargin="100px"
                   />
                 </div>
                 
@@ -892,25 +915,25 @@ export default function Home() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaCode className="text-3xl text-purple-400" />
+                      <FaCode className="text-3xl text-purple-700 dark:text-purple-400" />
                     </div>
                     <div className="flex-1">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-3xl font-bold mb-2 drop-shadow-sm"
-                      >
-                        Research Publication
-                      </GradientText>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300 mb-3"
-                      >
-                        Published research work in computer science. Contributing to the advancement of technology through innovative research and development.
-                      </GradientText>
+                        <GradientText
+                          colors={titleGradientColors}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-3xl font-bold mb-2 drop-shadow-sm"
+                        >
+                          Research Publication
+                        </GradientText>
+                        <GradientText
+                          colors={textGradientColors}
+                          animationSpeed={6}
+                          showBorder={false}
+                          className="text-base leading-relaxed text-gray-800 dark:text-gray-300 mb-3"
+                        >
+                          Published research work in computer science. Contributing to the advancement of technology through innovative research and development.
+                        </GradientText>
                       <a
                         href="https://example.com/publication"
                         target="_blank"
@@ -933,25 +956,25 @@ export default function Home() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <FaTrophy className="text-3xl text-purple-400" />
+                      <FaTrophy className="text-3xl text-purple-700 dark:text-purple-400" />
                     </div>
                     <div className="flex-1">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-3xl font-bold mb-2 drop-shadow-sm"
-                      >
-                        Member - Girls Who Code
-                      </GradientText>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
-                      >
-                        Active member of Girls Who Code, participating in coding workshops, mentoring sessions, and events that empower women in tech. Strengthening programming, leadership, and networking skills across diverse domains in computer science.
-                      </GradientText>
+                        <GradientText
+                          colors={titleGradientColors}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-3xl font-bold mb-2 drop-shadow-sm"
+                        >
+                          Member - Girls Who Code
+                        </GradientText>
+                        <GradientText
+                          colors={textGradientColors}
+                          animationSpeed={6}
+                          showBorder={false}
+                          className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
+                        >
+                          Active member of Girls Who Code, participating in coding workshops, mentoring sessions, and events that empower women in tech. Strengthening programming, leadership, and networking skills across diverse domains in computer science.
+                        </GradientText>
                     </div>
                   </div>
                 </ScrollRevealCard>
@@ -963,25 +986,25 @@ export default function Home() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <MdArchitecture className="text-3xl text-purple-400" />
+                      <MdArchitecture className="text-3xl text-purple-700 dark:text-purple-400" />
                     </div>
                     <div className="flex-1">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-3xl font-bold mb-2 drop-shadow-sm"
-                      >
-                        Software Engineer Fellow
-                      </GradientText>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
-                      >
-                        As a Software Engineer Fellow, collaborating on technical projects and problem-solving challenges focused on backend systems, data pipelines, and AI applications. Contributing to innovative solutions and advancing technical expertise.
-                      </GradientText>
+                        <GradientText
+                          colors={titleGradientColors}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-3xl font-bold mb-2 drop-shadow-sm"
+                        >
+                          Software Engineer Fellow
+                        </GradientText>
+                        <GradientText
+                          colors={textGradientColors}
+                          animationSpeed={6}
+                          showBorder={false}
+                          className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
+                        >
+                          As a Software Engineer Fellow, collaborating on technical projects and problem-solving challenges focused on backend systems, data pipelines, and AI applications. Contributing to innovative solutions and advancing technical expertise.
+                        </GradientText>
                     </div>
                   </div>
                 </ScrollRevealCard>
@@ -993,25 +1016,25 @@ export default function Home() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-400/30 shadow-md shadow-purple-500/10">
-                      <MdEmojiEvents className="text-3xl text-purple-400" />
+                      <MdEmojiEvents className="text-3xl text-purple-700 dark:text-purple-400" />
                     </div>
                     <div className="flex-1">
-                      <GradientText
-                        colors={["#a78bfa", "#ec4899", "#a78bfa", "#ec4899", "#a78bfa"]}
-                        animationSpeed={4}
-                        showBorder={false}
-                        className="text-3xl font-bold mb-2 drop-shadow-sm"
-                      >
-                        State Level Bharatnatyam Dancer
-                      </GradientText>
-                      <GradientText
-                        colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
-                        animationSpeed={6}
-                        showBorder={false}
-                        className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
-                      >
-                        Achieved recognition as a State Level Bharatnatyam dancer, showcasing dedication to cultural arts and performing arts excellence alongside technical pursuits.
-                      </GradientText>
+                        <GradientText
+                          colors={titleGradientColors}
+                          animationSpeed={4}
+                          showBorder={false}
+                          className="text-3xl font-bold mb-2 drop-shadow-sm"
+                        >
+                          State Level Bharatnatyam Dancer
+                        </GradientText>
+                        <GradientText
+                          colors={textGradientColors}
+                          animationSpeed={6}
+                          showBorder={false}
+                          className="text-base leading-relaxed text-gray-800 dark:text-gray-300"
+                        >
+                          Achieved recognition as a State Level Bharatnatyam dancer, showcasing dedication to cultural arts and performing arts excellence alongside technical pursuits.
+                        </GradientText>
                     </div>
                   </div>
                 </ScrollRevealCard>
@@ -1025,19 +1048,19 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-8 md:px-16">
             <div className="flex items-center gap-4 mb-12 group">
               <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20 transition-all duration-300">
-                <MdSettings className="text-5xl text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                <MdSettings className="text-5xl text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
               </div>
               <SplitText
                 text="Skills & Technologies"
                 tag="h2"
-                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm"
-                delay={50}
-                duration={0.6}
+                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm leading-[1.2] pb-2"
+                delay={10}
+                duration={0.2}
                 splitType="chars"
-                from={{ opacity: 0, y: 40 }}
+                from={{ opacity: 0, y: 20 }}
                 to={{ opacity: 1, y: 0 }}
-                threshold={0.15}
-                rootMargin="-150px"
+                threshold={0.5}
+                rootMargin="100px"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -1061,16 +1084,22 @@ export default function Home() {
               ].map((skill, index) => (
                 <MagneticCard
                   key={skill.name}
-                  className="p-6 rounded-[30px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-shadow duration-300"
+                  className={`p-6 rounded-[30px] backdrop-blur-md border-2 shadow-none transition-shadow duration-300 ${
+                    theme === 'light'
+                      ? 'bg-[#FEDE86]/60 border-gray-400 shadow-[0_0_20px_rgba(0,0,0,0.1)] hover:shadow-[0_0_30px_rgba(0,0,0,0.2)]'
+                      : 'bg-gradient-to-br from-purple-900/30 to-purple-700/20 border-purple-500/30 text-white shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.4)]'
+                  }`}
                 >
                   <div className="flex flex-col items-center text-center">
                     <div className="mb-3">
-                      {skillIcons[skill.name] || <FaCode className="text-3xl text-purple-600 dark:text-purple-400" />}
+                      {skillIcons[skill.name] || (
+                        <FaCode className={`text-3xl ${theme === 'light' ? 'text-gray-800' : 'text-purple-400'}`} />
+                      )}
                     </div>
                     <SplitText
                       text={skill.name}
                       tag="h3"
-                      className="text-xl font-bold mb-1 text-white"
+                      className={`text-xl font-bold mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}
                       delay={30}
                       duration={0.4}
                       splitType="chars"
@@ -1082,7 +1111,7 @@ export default function Home() {
                     <SplitText
                       text={skill.category}
                       tag="span"
-                      className="text-sm text-gray-400"
+                      className={`text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}
                       delay={20}
                       duration={0.3}
                       splitType="chars"
@@ -1103,37 +1132,43 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-8 md:px-16">
             <div className="flex items-center gap-4 mb-12 group">
               <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-purple-400/30 shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20 transition-all duration-300">
-                <MdContactMail className="text-5xl text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                <MdContactMail className="text-5xl text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
               </div>
               <SplitText
                 text="Let's Work Together"
                 tag="h2"
-                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm"
-                delay={50}
-                duration={0.6}
+                className="text-5xl font-bold text-gray-900 dark:text-white drop-shadow-sm leading-[1.2] pb-2"
+                delay={10}
+                duration={0.2}
                 splitType="chars"
-                from={{ opacity: 0, y: 40 }}
+                from={{ opacity: 0, y: 20 }}
                 to={{ opacity: 1, y: 0 }}
-                threshold={0.15}
-                rootMargin="-150px"
+                threshold={0.5}
+                rootMargin="100px"
               />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               {/* Left Side - Info */}
               <ScrollRevealCard
                 index={0}
-                className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
+                className={`p-8 rounded-[40px] backdrop-blur-md border-2 shadow-none ${
+                  theme === 'light'
+                    ? 'bg-[#FEDE86]/80 border-gray-400'
+                    : 'bg-gradient-to-br from-purple-900/30 to-purple-700/20 border-purple-500/30 text-white'
+                }`}
               >
-                <h3 className="text-3xl font-bold mb-6">Get in Touch</h3>
-                <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-8">
+                <h3 className={`text-3xl font-bold mb-6 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>Get in Touch</h3>
+                <p className={`text-lg leading-relaxed mb-8 ${theme === 'light' ? 'text-gray-800' : 'text-gray-300'}`}>
                   I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
                   Whether you have a question or just want to say hi, feel free to reach out!
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                      theme === 'light' ? 'bg-gray-800' : 'bg-purple-500/20'
+                    }`}>
                       <svg
-                        className="w-6 h-6 text-purple-400"
+                        className={`w-6 h-6 ${theme === 'light' ? 'text-white' : 'text-purple-400'}`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -1147,19 +1182,25 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">Email</p>
+                      <p className={`text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>Email</p>
                       <a
                         href="mailto:ssn9077@nyu.edu"
-                        className="text-lg text-purple-400 hover:text-purple-300 transition-colors"
+                        className={`text-lg transition-colors ${
+                          theme === 'light'
+                            ? 'text-gray-900 hover:text-gray-700'
+                            : 'text-purple-400 hover:text-purple-300'
+                        }`}
                       >
                         ssn9077@nyu.edu
                       </a>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                      theme === 'light' ? 'bg-gray-800' : 'bg-purple-500/20'
+                    }`}>
                       <svg
-                        className="w-6 h-6 text-purple-400"
+                        className={`w-6 h-6 ${theme === 'light' ? 'text-white' : 'text-purple-400'}`}
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -1167,21 +1208,27 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">LinkedIn</p>
+                      <p className={`text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>LinkedIn</p>
                       <a
                         href="https://linkedin.com/in/subhiksha-seshadri"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-lg text-purple-400 hover:text-purple-300 transition-colors"
+                        className={`text-lg transition-colors ${
+                          theme === 'light'
+                            ? 'text-gray-900 hover:text-gray-700'
+                            : 'text-purple-400 hover:text-purple-300'
+                        }`}
                       >
                         /in/subhiksha-seshadri
                       </a>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                      theme === 'light' ? 'bg-gray-800' : 'bg-purple-500/20'
+                    }`}>
                       <svg
-                        className="w-6 h-6 text-purple-400"
+                        className={`w-6 h-6 ${theme === 'light' ? 'text-white' : 'text-purple-400'}`}
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -1193,12 +1240,16 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">GitHub</p>
+                      <p className={`text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>GitHub</p>
                       <a
                         href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-                        className="text-lg text-purple-400 hover:text-purple-300 transition-colors"
+                        className={`text-lg transition-colors ${
+                          theme === 'light'
+                            ? 'text-gray-900 hover:text-gray-700'
+                            : 'text-purple-400 hover:text-purple-300'
+                        }`}
           >
                         github.com
           </a>
@@ -1210,7 +1261,11 @@ export default function Home() {
               {/* Right Side - Form */}
               <ScrollRevealCard
                 index={1}
-                className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
+                className={`p-8 rounded-[40px] backdrop-blur-md border-2 shadow-none ${
+                  theme === 'light'
+                    ? 'bg-[#FEDE86]/80 border-gray-400'
+                    : 'bg-gradient-to-br from-purple-900/30 to-purple-700/20 border-purple-500/30 text-white'
+                }`}
               >
                 <ContactForm />
               </ScrollRevealCard>

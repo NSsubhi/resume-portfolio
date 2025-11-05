@@ -68,7 +68,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: #FEDE86;
   --foreground: oklch(0.13 0.028 261.692);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0.028 261.692);
@@ -174,4 +174,15 @@
 
 .animate-gradient {
   animation: gradient 8s linear infinite;
+}
+
+/* Fix for SplitText descenders (g, j, p, q, y) */
+.split-parent {
+  overflow: visible !important;
+}
+
+.split-char {
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: baseline;
 }

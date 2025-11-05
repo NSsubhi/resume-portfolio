@@ -214,7 +214,7 @@ const CardNav: React.FC<CardNavProps> = ({
               <img src={logo} alt={logoAlt} className="logo h-[28px]" />
             ) : (
               <span className="logo text-xl font-bold tracking-tight" style={{ color: menuColor || "#000" }}>
-                SS
+                Subhiksha Seshadri Nallore
               </span>
             )}
           </div>
@@ -223,6 +223,20 @@ const CardNav: React.FC<CardNavProps> = ({
             type="button"
             className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 items-center h-full font-medium cursor-pointer transition-colors duration-300"
             style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+            onClick={() => {
+              // If navbar is not expanded, expand it
+              if (!isExpanded) {
+                toggleMenu();
+              }
+              // Scroll to contact section after a short delay
+              setTimeout(() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  const offsetTop = contactSection.offsetTop - 80; // Account for nav height
+                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+              }, isExpanded ? 100 : 500); // Wait longer if navbar needs to expand first
+            }}
           >
             Contact
           </button>
@@ -251,6 +265,24 @@ const CardNav: React.FC<CardNavProps> = ({
                     className="nav-card-link inline-flex items-center gap-[6px] no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px]"
                     href={lnk.href}
                     aria-label={lnk.ariaLabel}
+                    onClick={(e) => {
+                      if (lnk.href.startsWith('#')) {
+                        e.preventDefault();
+                        const sectionId = lnk.href.substring(1);
+                        const section = document.getElementById(sectionId);
+                        if (section) {
+                          // Close navbar first
+                          if (isExpanded) {
+                            toggleMenu();
+                          }
+                          // Scroll to section after a delay
+                          setTimeout(() => {
+                            const offsetTop = section.offsetTop - 80;
+                            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                          }, isExpanded ? 100 : 500);
+                        }
+                      }
+                    }}
                   >
                     <GoArrowUpRight className="nav-card-link-icon shrink-0" aria-hidden="true" />
                     {lnk.label}

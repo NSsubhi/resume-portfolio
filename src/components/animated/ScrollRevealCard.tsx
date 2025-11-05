@@ -20,19 +20,19 @@ export const ScrollRevealCard: React.FC<ScrollRevealCardProps> = ({
   staggerDelay = 0.15,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-150px" });
+  const isInView = useInView(ref, { once: true, margin: "100px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60, scale: 0.95 }}
+      initial={{ opacity: 0.3, y: 30, scale: 0.98 }}
       animate={
         isInView
           ? { opacity: 1, y: 0, scale: 1 }
-          : { opacity: 0, y: 60, scale: 0.95 }
+          : { opacity: 0.3, y: 30, scale: 0.98 }
       }
       transition={{
-        duration: 0.6,
+        duration: 0.4,
         delay: delay + index * staggerDelay,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}

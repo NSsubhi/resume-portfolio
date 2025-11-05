@@ -27,9 +27,9 @@ const menuItems: CardNavItem[] = [
     bgColor: "rgba(139, 92, 246, 0.2)",
     textColor: "#fff",
     links: [
-      { label: "Email", href: "mailto:ssn9077@nyu.edu", ariaLabel: "Send Email" },
-      { label: "LinkedIn", href: "https://linkedin.com/in/subhiksha-seshadri", ariaLabel: "Visit LinkedIn" },
-      { label: "GitHub", href: "https://github.com", ariaLabel: "Visit GitHub" },
+      { label: "Email", href: "#contact", ariaLabel: "Go to Contact Section" },
+      { label: "LinkedIn", href: "#contact", ariaLabel: "Go to Contact Section" },
+      { label: "GitHub", href: "#contact", ariaLabel: "Go to Contact Section" },
     ],
   },
 ];
