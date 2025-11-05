@@ -441,7 +441,7 @@ export default function Home() {
                                 colors={["#ddd6fe", "#fae8ff", "#ddd6fe", "#fae8ff", "#ddd6fe"]}
                                 animationSpeed={6}
                                 showBorder={false}
-                                className="text-lg leading-relaxed text-gray-300"
+                                className="text-lg leading-relaxed text-gray-700 dark:text-gray-300"
                               >
                                 {highlight}
                               </GradientText>
@@ -487,19 +487,19 @@ export default function Home() {
                 const getTechColor = (tech: string) => {
                   const techLower = tech.toLowerCase();
                   if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
-                    return "bg-green-500/20 border-green-400/30 text-green-300";
+                    return "bg-green-500/20 border-green-400/30 text-green-700 dark:text-green-300";
                   } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
-                    return "bg-blue-500/20 border-blue-400/30 text-blue-300";
+                    return "bg-blue-500/20 border-blue-400/30 text-blue-700 dark:text-blue-300";
                   } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
-                    return "bg-orange-500/20 border-orange-400/30 text-orange-300";
+                    return "bg-orange-500/20 border-orange-400/30 text-orange-700 dark:text-orange-300";
                   } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
-                    return "bg-yellow-500/20 border-yellow-400/30 text-yellow-300";
+                    return "bg-yellow-500/20 border-yellow-400/30 text-yellow-700 dark:text-yellow-300";
                   } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
-                    return "bg-pink-500/20 border-pink-400/30 text-pink-300";
+                    return "bg-pink-500/20 border-pink-400/30 text-pink-700 dark:text-pink-300";
                   } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
-                    return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                    return "bg-purple-500/20 border-purple-400/30 text-purple-700 dark:text-purple-300";
                   } else {
-                    return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                    return "bg-purple-500/20 border-purple-400/30 text-purple-700 dark:text-purple-300";
                   }
                 };
 
@@ -524,7 +524,7 @@ export default function Home() {
                         >
                           {project.title}
                         </GradientText>
-                        <p className="text-sm text-gray-300 mb-4 line-clamp-3 leading-relaxed">
+                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed">
                           {project.description}
                         </p>
                         <div className="flex flex-wrap gap-2 mb-4">
@@ -544,7 +544,7 @@ export default function Home() {
                               onClick={(e) => e.stopPropagation()}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors text-sm font-semibold"
+                              className="inline-flex items-center gap-2 text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 transition-colors text-sm font-semibold"
                             >
                               <FaGitAlt className="w-4 h-4" />
                               GitHub
@@ -569,7 +569,7 @@ export default function Home() {
                               onClick={(e) => e.stopPropagation()}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors text-sm font-semibold"
+                              className="inline-flex items-center gap-2 text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 transition-colors text-sm font-semibold"
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
                               animate={{
@@ -655,12 +655,12 @@ export default function Home() {
                           whileHover={{ scale: 1.1, rotate: 90 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={() => setSelectedProject(null)}
-                          className="p-2 rounded-full bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-300 transition-colors"
+                          className="p-2 rounded-full bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-700 dark:text-purple-300 transition-colors"
                         >
                           <MdClose className="w-6 h-6" />
                         </motion.button>
                       </div>
-                      <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                      <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                         {selectedProject.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mb-6">
@@ -669,19 +669,19 @@ export default function Home() {
                           const getTechColor = (tech: string) => {
                             const techLower = tech.toLowerCase();
                             if (techLower.includes("fastapi") || techLower.includes("flask") || techLower.includes("python")) {
-                              return "bg-green-500/20 border-green-400/30 text-green-300";
+                              return "bg-green-500/20 border-green-400/30 text-green-700 dark:text-green-300";
                             } else if (techLower.includes("react") || techLower.includes("streamlit") || techLower.includes("javascript") || techLower.includes("typescript")) {
-                              return "bg-blue-500/20 border-blue-400/30 text-blue-300";
+                              return "bg-blue-500/20 border-blue-400/30 text-blue-700 dark:text-blue-300";
                             } else if (techLower.includes("postgresql") || techLower.includes("sql") || techLower.includes("redis") || techLower.includes("mongodb")) {
-                              return "bg-orange-500/20 border-orange-400/30 text-orange-300";
+                              return "bg-orange-500/20 border-orange-400/30 text-orange-700 dark:text-orange-300";
                             } else if (techLower.includes("spark") || techLower.includes("kafka") || techLower.includes("hadoop")) {
-                              return "bg-yellow-500/20 border-yellow-400/30 text-yellow-300";
+                              return "bg-yellow-500/20 border-yellow-400/30 text-yellow-700 dark:text-yellow-300";
                             } else if (techLower.includes("scikit") || techLower.includes("pandas") || techLower.includes("numpy") || techLower.includes("prophet") || techLower.includes("ml")) {
-                              return "bg-pink-500/20 border-pink-400/30 text-pink-300";
+                              return "bg-pink-500/20 border-pink-400/30 text-pink-700 dark:text-pink-300";
                             } else if (techLower.includes("openai") || techLower.includes("langchain") || techLower.includes("chromadb") || techLower.includes("huggingface")) {
-                              return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                              return "bg-purple-500/20 border-purple-400/30 text-purple-700 dark:text-purple-300";
                             } else {
-                              return "bg-purple-500/20 border-purple-400/30 text-purple-300";
+                              return "bg-purple-500/20 border-purple-400/30 text-purple-700 dark:text-purple-300";
                             }
                           };
                           return (
@@ -695,11 +695,11 @@ export default function Home() {
                         })}
                       </div>
                       <div className="space-y-3 mb-6">
-                        <h3 className="text-xl font-bold text-purple-300 mb-3">Key Highlights:</h3>
+                        <h3 className="text-xl font-bold text-purple-700 dark:text-purple-300 mb-3">Key Highlights:</h3>
                         {selectedProject.highlights.map((highlight, idx) => (
                           <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-purple-900/30 border border-purple-500/20">
                             <span className="text-purple-400 mt-1 text-lg">•</span>
-                            <p className="text-base leading-relaxed text-gray-300 flex-1">
+                            <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 flex-1">
                               {highlight}
                             </p>
                           </div>
@@ -712,7 +712,7 @@ export default function Home() {
                               href={selectedProject.links.github}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-300 hover:text-purple-200 transition-all font-semibold"
+                              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border-2 border-purple-400/30 text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 transition-all font-semibold"
                             >
                               <FaGitAlt className="w-5 h-5" />
                               View on GitHub
@@ -915,7 +915,7 @@ export default function Home() {
                         href="https://example.com/publication"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors text-sm font-semibold underline"
+                        className="inline-flex items-center gap-2 text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 transition-colors text-sm font-semibold underline"
                       >
                         View Publication
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1125,7 +1125,7 @@ export default function Home() {
                 className="p-8 rounded-[40px] bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-md border-2 border-purple-500/30 text-white shadow-none"
               >
                 <h3 className="text-3xl font-bold mb-6">Get in Touch</h3>
-                <p className="text-lg leading-relaxed text-gray-300 mb-8">
+                <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-8">
                   I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
                   Whether you have a question or just want to say hi, feel free to reach out!
                 </p>
